@@ -22,44 +22,56 @@ namespace CrawlerBase.Logic.Dataflow
         protected override Task<List<DownloadableData>> ProcessData(ProcessableData data)
         {
             var items = new List<DownloadableData>();
-            if (data.OperationElement is IOperationElement<List<string>> opElement)
+            try
             {
-                var x = opElement.Process(data.Content);
-                x.ForEach(y => items.Add(new DownloadableData {
-                    Url = y,
-                    OperationElement = opElement.NextOperation
-                }));                
-            }
-            else if (data.OperationElement is IOperationElement<string> opElement1)
-            {
-                var x = opElement1.Process(data.Content);
-                items.Add(new DownloadableData
+                if (data.OperationElement is IOperationElement<List<string>> opElement)
                 {
-                    Url = x,
-                    OperationElement = opElement1.NextOperation
-                });
-            }
-            else if (data.OperationElement is IContentElement<string> ce)
-            {
-                ce.Process(data.SourceUrl, data.Content);
-            }
-            else if (data.OperationElement is IRootEnumOperationElement root1)
-            {
-                items.Add(new DownloadableData
+                    var x = opElement.Process(data.Content);
+                    x.ForEach(y => items.Add(new DownloadableData
+                    {
+                        Url = y,
+                        OperationElement = opElement.NextOperation
+                    }));
+                }
+                else if (data.OperationElement is IOperationElement<string> opElement1)
                 {
-                    Url = root1.BaseUrl,
-                    OperationElement = root1.NextOperation
-                });
-            }
-            else if (data.OperationElement is IRootOperationElement root)
-            {
-                items.Add(new DownloadableData
+                    var x = opElement1.Process(data.Content);
+                    items.Add(new DownloadableData
+                    {
+                        Url = x,
+                        OperationElement = opElement1.NextOperation
+                    });
+                }
+                else if (data.OperationElement is IContentElement<string> ce)
                 {
-                    Url = root.BaseUrl,
-                    OperationElement = root.NextOperation
-                });
+                    ce.Process(data.SourceUrl, data.Content);
+                }
+                else if (data.OperationElement is IRootEnumOperationElement root1)
+                {
+                    items.Add(new DownloadableData
+                    {
+                        Url = root1.BaseUrl,
+                        OperationElement = root1.NextOperation
+                    });
+                }
+                else if (data.OperationElement is IRootOperationElement root)
+                {
+                    items.Add(new DownloadableData
+                    {
+                        Url = root.BaseUrl,
+                        OperationElement = root.NextOperation
+                    });
+                }
             }
-
+            catch (Exception ex)
+            {
+                var errorObject = new
+                {
+                    data.Content,
+                    ex
+                };
+                throw;
+            }
             return Task.Run(() => items);
         }
     }

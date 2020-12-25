@@ -47,5 +47,13 @@ namespace CrawlerBase.Logic.Dataflow
             //pageDownloaderThreadPool.Work();
             //pageDataProcessorThreadPool.Work();
         }
+
+        public void Stop()
+        {
+            pageDownloaderThreadPool.Stop();
+            pageDataProcessorThreadPool.Stop();
+            //pageDownloaderThreadPool.Work();
+            //pageDataProcessorThreadPool.Work();
+        }
     }
 }

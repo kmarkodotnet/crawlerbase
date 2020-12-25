@@ -12,9 +12,21 @@ namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
 
         public HtmlDocument Parse(string content)
         {
-            var doc = new HtmlDocument();
-            doc.LoadHtml(content);
-            return doc;
+            try
+            {
+                var doc = new HtmlDocument();
+                doc.LoadHtml(content);
+                return doc;
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new
+                {
+                    content,
+                    ex
+                };
+                throw;
+            }
         }
     }
 }

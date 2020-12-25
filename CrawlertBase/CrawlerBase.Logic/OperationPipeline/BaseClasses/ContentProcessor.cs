@@ -1,4 +1,5 @@
-﻿using CrawlerBase.Logic.OperationPipeline.Interfaces;
+﻿
+using CrawlerBase.Logic.OperationPipeline.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,7 +27,19 @@ namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
 
         public void Process(string sourceUrl, T data)
         {
-            ProcessData(sourceUrl, data);
+            try
+            {
+                ProcessData(sourceUrl, data);
+            }
+            catch (Exception ex)
+            {
+                var errorObject = new
+                {
+                    data,
+                    ex
+                };
+                throw;
+            }
         }
 
         protected abstract void ProcessData(string sourceUrl, T data);

@@ -19,6 +19,10 @@ namespace CrawlerBase.Logic.Dataflow
             Workers.ForEach(w => w.Start());
         }
 
+        public void Stop()
+        {
+            Workers.ForEach(w => w.Stop());
+        }
         public void InitializeQueues(IReceivableSourceBlock<T1> inputQueue, ITargetBlock<T2> outputQueue)
         {
             Workers.ForEach(w => w.Initialize(inputQueue, outputQueue));
