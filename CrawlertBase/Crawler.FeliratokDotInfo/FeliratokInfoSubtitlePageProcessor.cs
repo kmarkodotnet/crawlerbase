@@ -38,7 +38,7 @@ namespace Crawler.FeliratokDotInfo
     {
         public void Save(string name, string content)
         {
-            var path = string.Format(".\\{0}", name);
+            var path = string.Format(".\\x\\{0}", name);
             File.WriteAllText(path, content);
         }
     }

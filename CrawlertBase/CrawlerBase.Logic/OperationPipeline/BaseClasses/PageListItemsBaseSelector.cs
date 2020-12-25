@@ -25,7 +25,7 @@ namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
             var nodes = n.Select(xPath);
             for (int i = 0; i < nodes.Count; i++)
             {
-                if (FilterNode(nodes.Current))
+                if (FilterNode(nodes.Current.Clone()))
                 {
                     selected.Add(nodes.Current.Value);
                 }

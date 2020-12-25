@@ -7,22 +7,20 @@ namespace CrawlerBase.Logic.Dataflow
 {
     public class OperationEngine<T1, T2>
     {
-        private readonly IWorker<T1, T2> pageDownloader;
-        private readonly IWorker<T2, T1> pageDataProcessor;
+        private readonly WorkerThreadPool<T1, T2> pageDownloaderThreadPool;
+        private readonly WorkerThreadPool<T2, T1> pageDataProcessorThreadPool;
 
         public BufferBlock<T1> DownloadUrlQueue { get; set; }
         public BufferBlock<T2> ProcessDataQueue { get; set; }
 
-        public OperationEngine(IWorker<T1, T2> pageDownloader, IWorker<T2, T1> pageDataProcessor)
+        public OperationEngine(WorkerThreadPool<T1, T2> pageDownloaderThreadPool, WorkerThreadPool<T2, T1> pageDataProcessorThreadPool)
         {
             DownloadUrlQueue = new BufferBlock<T1>();
             ProcessDataQueue = new BufferBlock<T2>();
 
-            this.pageDownloader = pageDownloader;
-            this.pageDownloader.Initialize(DownloadUrlQueue, ProcessDataQueue);
+            this.pageDownloaderThreadPool = pageDownloaderThreadPool;
 
-            this.pageDataProcessor = pageDataProcessor;
-            this.pageDataProcessor.Initialize(ProcessDataQueue, DownloadUrlQueue);
+            this.pageDataProcessorThreadPool = pageDataProcessorThreadPool;
         }
 
         protected void InsertQ1(T1 insertData)
@@ -34,10 +32,20 @@ namespace CrawlerBase.Logic.Dataflow
             ProcessDataQueue.Post<T2>(insertData);
         }
 
+        public void Initialize(List<WorkerBase<T1, T2>> pageDownloaderWorkers, List<WorkerBase<T2, T1>> pageDataProcessorWorkers)
+        {
+            this.pageDownloaderThreadPool.InitializeWorkers(pageDownloaderWorkers);
+            this.pageDownloaderThreadPool.InitializeQueues(DownloadUrlQueue, ProcessDataQueue);
+            this.pageDataProcessorThreadPool.InitializeWorkers(pageDataProcessorWorkers);
+            this.pageDataProcessorThreadPool.InitializeQueues(ProcessDataQueue, DownloadUrlQueue);
+        }
+
         public void Start()
         {
-            pageDownloader.Work();
-            pageDataProcessor.Work();
+            pageDownloaderThreadPool.Start();
+            pageDataProcessorThreadPool.Start();
+            //pageDownloaderThreadPool.Work();
+            //pageDataProcessorThreadPool.Work();
         }
     }
 }

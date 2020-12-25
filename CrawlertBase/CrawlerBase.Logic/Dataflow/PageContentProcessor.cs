@@ -9,6 +9,16 @@ namespace CrawlerBase.Logic.Dataflow
 {
     public class PageContentProcessor : WorkerBase<ProcessableData, DownloadableData>
     {
+        public static List<WorkerBase<ProcessableData, DownloadableData>> CreateInstances(int count)
+        {
+            var l = new List<WorkerBase<ProcessableData, DownloadableData>>();
+            for (int i = 0; i < count; i++)
+            {
+                l.Add(new PageContentProcessor());
+            }
+            return l;
+        }
+
         protected override Task<List<DownloadableData>> ProcessData(ProcessableData data)
         {
             var items = new List<DownloadableData>();

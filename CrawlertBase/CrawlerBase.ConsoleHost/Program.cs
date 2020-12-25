@@ -4,6 +4,7 @@ using CrawlerBase.Logic.Dataflow;
 using CrawlerBase.Logic.OperationPipeline.BaseClasses;
 using HtmlAgilityPack;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,6 @@ namespace CrawlertBase.ConsoleHost
     //TODO: ex handling
     //TODO: storing downlaoded data url-s
     //TODO: filtering downloadable url-s
-    //TODO: threadpool
     //TODO: logging
     //TODO: DownloaderOperationEngine.Stop()
     //TODO: 'donothing' queue element type
@@ -23,15 +23,13 @@ namespace CrawlertBase.ConsoleHost
     {
         static async Task Main(string[] args)
         {
-            var doe = new DownloaderOperationEngine(new Downloader(), new PageContentProcessor());
-
             FeliratokInfoRootProcessor processedFeliratokInfoRootProcessor = InitProcessed();
-
             FeliratokInfoEnumRootProcessor computedFeliratokInfoRootProcessor = InitComputed();
-
             FeliratokInfoEnumRootProcessor computedConditionalFeliratokInfoRootProcessor = InitComputedConditional();
 
-            doe.Initialize(computedConditionalFeliratokInfoRootProcessor);
+            var doe = new DownloaderOperationEngine(new DownloaderThreadPool(), new PageContentProcessorThreadPool());
+            doe.Initialize(Downloader.CreateInstances(7), PageContentProcessor.CreateInstances(1));
+            doe.SetupRootElement(computedConditionalFeliratokInfoRootProcessor);
             doe.Start();
 
             Console.ReadKey();
@@ -41,7 +39,7 @@ namespace CrawlertBase.ConsoleHost
         {
             return new FeliratokInfoEnumRootProcessor(
                 "https://www.feliratok.info/",
-                new PageEnumeratorSelector("/index.php?page={0}&tab=all&sorrend=&irany=&search=&nyelv=&sid=&sorozatnev=&complexsearch=&evad=&epizod1=&elotag=&minoseg=&rlsr=", 3, 3),
+                new PageEnumeratorSelector("/index.php?page={0}&tab=all&sorrend=&irany=&search=&nyelv=&sid=&sorozatnev=&complexsearch=&evad=&epizod1=&elotag=&minoseg=&rlsr=", 1, 10),
                     new FeliratokInfoListPagesProcessor(
                         new FeliratokInfoConditionalPageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
                         new FeliratokInfoSubtitleDataProcessor(new Url2FileNameFormatter())

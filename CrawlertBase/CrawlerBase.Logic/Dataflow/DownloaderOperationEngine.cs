@@ -7,12 +7,14 @@ namespace CrawlerBase.Logic.Dataflow
 {
     public class DownloaderOperationEngine : OperationEngine<DownloadableData, ProcessableData>
     {
-        public DownloaderOperationEngine(IWorker<DownloadableData, ProcessableData> pageDownloader, IWorker<ProcessableData, DownloadableData> pageDataProcessor) 
-            : base(pageDownloader, pageDataProcessor)
+        public DownloaderOperationEngine(
+            WorkerThreadPool<DownloadableData, ProcessableData> pageDownloaderThreadPool, 
+            WorkerThreadPool<ProcessableData, DownloadableData> pageDataProcessorThreadPool) 
+            : base(pageDownloaderThreadPool, pageDataProcessorThreadPool)
         {
         }
 
-        public void Initialize(IRootOperationElement rootElement)
+        public void SetupRootElement(IRootOperationElement rootElement)
         {
             if (rootElement is IRootEnumOperationElement reo)
             {
