@@ -13,7 +13,7 @@ using System.Threading.Tasks.Dataflow;
 namespace CrawlertBase.ConsoleHost
 {
     //TODO: ex handling
-    //TODO: storing downlaoded data url-s
+    //TODO: storing downloaded data url-s
     //TODO: filtering downloadable url-s
     //TODO: logging
     //TODO: DownloaderOperationEngine.Stop()
@@ -42,7 +42,7 @@ namespace CrawlertBase.ConsoleHost
                 new PageEnumeratorSelector("/index.php?page={0}&tab=all&sorrend=&irany=&search=&nyelv=&sid=&sorozatnev=&complexsearch=&evad=&epizod1=&elotag=&minoseg=&rlsr=", 1, 10),
                     new FeliratokInfoListPagesProcessor(
                         new FeliratokInfoConditionalPageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
-                        new FeliratokInfoSubtitleDataProcessor(new Url2FileNameFormatter())
+                        new FeliratokInfoSubtitleDataProcessor(new FileSaver(), new Url2FileNameFormatter())
                     )
                 );
         }
@@ -54,7 +54,7 @@ namespace CrawlertBase.ConsoleHost
                 new PageEnumeratorSelector("/index.php?page={0}&tab=all&sorrend=&irany=&search=&nyelv=&sid=&sorozatnev=&complexsearch=&evad=&epizod1=&elotag=&minoseg=&rlsr=", 3, 3),
                     new FeliratokInfoListPagesProcessor(
                         new PageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
-                        new FeliratokInfoSubtitleDataProcessor(new Url2FileNameFormatter())
+                        new FeliratokInfoSubtitleDataProcessor(new FileSaver(), new Url2FileNameFormatter())
                     )
                 );
         }
@@ -67,7 +67,7 @@ namespace CrawlertBase.ConsoleHost
                     new PageListItemsSelector("/html/body/div/div/a/@href"),
                     new FeliratokInfoListPagesProcessor(
                         new PageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
-                        new FeliratokInfoSubtitleDataProcessor(new Url2FileNameFormatter())
+                        new FeliratokInfoSubtitleDataProcessor(new FileSaver(), new Url2FileNameFormatter())
                     )
                 ));
         }
