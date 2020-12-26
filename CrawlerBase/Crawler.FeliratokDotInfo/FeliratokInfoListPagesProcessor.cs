@@ -10,9 +10,10 @@ namespace Crawler.FeliratokDotInfo
 {
     public class FeliratokInfoListPagesProcessor : PageProcessor<List<string>>
     {
-        public FeliratokInfoListPagesProcessor(ISelector<List<string>> Selector, IOperationBaseElement OpPipe)
+        public FeliratokInfoListPagesProcessor(ISelector<List<string>> Selector, IOperationBaseElement OpPipe, bool downloadUtf7 = false)
             :base(Selector, new HtmlParser(),  OpPipe)
         {
+            base.DownloadUtf7 = downloadUtf7;
         }
 
         protected override List<string> PostProcessAfterSelected(List<string> selected)

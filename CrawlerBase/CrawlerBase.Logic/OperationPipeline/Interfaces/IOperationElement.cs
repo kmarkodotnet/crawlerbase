@@ -16,6 +16,8 @@ namespace CrawlerBase.Logic.OperationPipeline.Interfaces
         /// <param name="content"></param>
         /// <returns></returns>
         TSelect Process(string content);
+
+        bool DownloadUtf7 { get; set; }
     }
 }
 

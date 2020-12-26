@@ -30,7 +30,8 @@ namespace CrawlerBase.Logic.Dataflow
                     x.ForEach(y => items.Add(new DownloadableData
                     {
                         Url = y,
-                        OperationElement = opElement.NextOperation
+                        OperationElement = opElement.NextOperation,
+                        DownloadUtf7 = opElement.DownloadUtf7
                     }));
                 }
                 else if (data.OperationElement is IOperationElement<string> opElement1)
@@ -39,7 +40,8 @@ namespace CrawlerBase.Logic.Dataflow
                     items.Add(new DownloadableData
                     {
                         Url = x,
-                        OperationElement = opElement1.NextOperation
+                        OperationElement = opElement1.NextOperation,
+                        DownloadUtf7 = opElement1.DownloadUtf7
                     });
                 }
                 else if (data.OperationElement is IContentElement<string> ce)

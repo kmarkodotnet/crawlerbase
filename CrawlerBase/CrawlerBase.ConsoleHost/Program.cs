@@ -26,13 +26,28 @@ namespace CrawlertBase.ConsoleHost
             FeliratokInfoRootProcessor processedFeliratokInfoRootProcessor = InitProcessed();
             FeliratokInfoEnumRootProcessor computedFeliratokInfoRootProcessor = InitComputed();
             FeliratokInfoEnumRootProcessor computedConditionalFeliratokInfoRootProcessor = InitComputedConditional();
+            FeliratokInfoEnumRootProcessor utf7ComputedConditionalFeliratokInfoRootProcessor = InitComputedConditionalUtf7();
+            
 
             var doe = new DownloaderOperationEngine(new DownloaderThreadPool(), new PageContentProcessorThreadPool());
             doe.Initialize(Downloader.CreateInstances(7), PageContentProcessor.CreateInstances(1));
-            doe.SetupRootElement(computedConditionalFeliratokInfoRootProcessor);
+            doe.SetupRootElement(utf7ComputedConditionalFeliratokInfoRootProcessor);
             doe.Start();
 
             Console.ReadKey();
+        }
+
+        private static FeliratokInfoEnumRootProcessor InitComputedConditionalUtf7()
+        {
+            return new FeliratokInfoEnumRootProcessor(
+                "https://www.feliratok.info/",
+                new PageEnumeratorSelector("/index.php?page={0}&tab=all&sorrend=&irany=&search=&nyelv=&sid=&sorozatnev=&complexsearch=&evad=&epizod1=&elotag=&minoseg=&rlsr=", 1, 10),
+                    new FeliratokInfoListPagesProcessor(
+                        new FeliratokInfoConditionalPageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
+                        new FeliratokInfoSubtitleDataProcessor(new FileSaver(), new Url2FileNameFormatter()),
+                        true
+                    )
+                );
         }
 
         private static FeliratokInfoEnumRootProcessor InitComputedConditional()

@@ -8,16 +8,15 @@ namespace CrawlerBase.Logic
 {
     public class PageDownloader
     {
-        public async Task<string> Download(string url)
+        public async Task<string> Download(string url, bool downloadUtf7)
         {
             using (var client = new HttpClient())
             {
                 using (var response = await client.GetAsync(url))
                 {
-                    var readAsByte = false;
                     if (response.IsSuccessStatusCode)
                     {
-                        if (readAsByte)
+                        if (downloadUtf7)
                         {
                             var r = await client.GetByteArrayAsync(url);
                             var responseString = Encoding.UTF7.GetString(r, 0, r.Length - 1);
