@@ -27,6 +27,11 @@ namespace CrawlerBase.Logic.Dataflow
             _thead.Start();
             ThreadId = _thead.ManagedThreadId;
         }
+
+        public void Stop()
+        {
+            _thead.Abort();
+        }
         public void Processor()
         {
             Work();

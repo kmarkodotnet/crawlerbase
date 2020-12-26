@@ -23,16 +23,27 @@ namespace CrawlerBase.Logic.Dataflow
 
         protected override async Task<List<ProcessableData>> ProcessData(DownloadableData data)
         {
-            var result = await _pd.Download(data.Url);
-
             var items = new List<ProcessableData>();
-            items.Add(new ProcessableData
-            {
-                Content = result,
-                SourceUrl = data.Url,
-                OperationElement = data.OperationElement
-            });
 
+            try
+            {
+                var result = await _pd.Download(data.Url);
+                items.Add(new ProcessableData
+                {
+                    Content = result,
+                    SourceUrl = data.Url,
+                    OperationElement = data.OperationElement
+                });
+
+            }
+            catch (Exception ex) 
+            {
+                var errorObject = new {
+                    data.Url,
+                    ex
+                };
+                throw;
+            }
             return items;
         }
     }
