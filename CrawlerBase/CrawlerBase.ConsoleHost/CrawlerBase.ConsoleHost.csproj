@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Crawler.FeliratokDotInfo\Crawler.FeliratokDotInfo.csproj" />
+    <ProjectReference Include="..\Crawler.FeliratokDotInfo\Crawler.FI.csproj" />
     <ProjectReference Include="..\CrawlerBase.Logic\CrawlerBase.Logic.csproj" />
   </ItemGroup>
 

@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Crawler.FeliratokDotInfo
 {
-    public class FeliratokInfoSubtitleDataProcessor : ContentProcessor<string>
+    public class FISubtitleDataProcessor : ContentProcessor<string>
     {
-        public FeliratokInfoSubtitleDataProcessor(ISaver saver, IFileNameFormatter fileNameFormatter)
+        public FISubtitleDataProcessor(ISaver saver, IFileNameFormatter fileNameFormatter)
         {
             this.saver = saver;
             this.fileNameFormatter = fileNameFormatter;

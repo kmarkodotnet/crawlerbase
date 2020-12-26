@@ -23,10 +23,10 @@ namespace CrawlertBase.ConsoleHost
     {
         static async Task Main(string[] args)
         {
-            FeliratokInfoRootProcessor processedFeliratokInfoRootProcessor = InitProcessed();
-            FeliratokInfoEnumRootProcessor computedFeliratokInfoRootProcessor = InitComputed();
-            FeliratokInfoEnumRootProcessor computedConditionalFeliratokInfoRootProcessor = InitComputedConditional();
-            FeliratokInfoEnumRootProcessor utf7ComputedConditionalFeliratokInfoRootProcessor = InitComputedConditionalUtf7();
+            FIRootProcessor processedFeliratokInfoRootProcessor = InitProcessed();
+            FIEnumRootProcessor computedFeliratokInfoRootProcessor = InitComputed();
+            FIEnumRootProcessor computedConditionalFeliratokInfoRootProcessor = InitComputedConditional();
+            FIEnumRootProcessor utf7ComputedConditionalFeliratokInfoRootProcessor = InitComputedConditionalUtf7();
             
 
             var doe = new DownloaderOperationEngine(new DownloaderThreadPool(), new PageContentProcessorThreadPool());
@@ -37,52 +37,52 @@ namespace CrawlertBase.ConsoleHost
             Console.ReadKey();
         }
 
-        private static FeliratokInfoEnumRootProcessor InitComputedConditionalUtf7()
+        private static FIEnumRootProcessor InitComputedConditionalUtf7()
         {
-            return new FeliratokInfoEnumRootProcessor(
+            return new FIEnumRootProcessor(
                 "https://www.feliratok.info/",
                 new PageEnumeratorSelector("/index.php?page={0}&tab=all&sorrend=&irany=&search=&nyelv=&sid=&sorozatnev=&complexsearch=&evad=&epizod1=&elotag=&minoseg=&rlsr=", 1, 10),
-                    new FeliratokInfoListPagesProcessor(
-                        new FeliratokInfoConditionalPageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
-                        new FeliratokInfoSubtitleDataProcessor(new FileSaver(), new Url2FileNameFormatter()),
+                    new FIListPagesProcessor(
+                        new FIConditionalPageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
+                        new FISubtitleDataProcessor(new FileSaver(), new Url2FileNameFormatter()),
                         true
                     )
                 );
         }
 
-        private static FeliratokInfoEnumRootProcessor InitComputedConditional()
+        private static FIEnumRootProcessor InitComputedConditional()
         {
-            return new FeliratokInfoEnumRootProcessor(
+            return new FIEnumRootProcessor(
                 "https://www.feliratok.info/",
                 new PageEnumeratorSelector("/index.php?page={0}&tab=all&sorrend=&irany=&search=&nyelv=&sid=&sorozatnev=&complexsearch=&evad=&epizod1=&elotag=&minoseg=&rlsr=", 1, 10),
-                    new FeliratokInfoListPagesProcessor(
-                        new FeliratokInfoConditionalPageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
-                        new FeliratokInfoSubtitleDataProcessor(new FileSaver(), new Url2FileNameFormatter())
+                    new FIListPagesProcessor(
+                        new FIConditionalPageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
+                        new FISubtitleDataProcessor(new FileSaver(), new Url2FileNameFormatter())
                     )
                 );
         }
 
-        private static FeliratokInfoEnumRootProcessor InitComputed()
+        private static FIEnumRootProcessor InitComputed()
         {
-            return new FeliratokInfoEnumRootProcessor(
+            return new FIEnumRootProcessor(
                 "https://www.feliratok.info/",
                 new PageEnumeratorSelector("/index.php?page={0}&tab=all&sorrend=&irany=&search=&nyelv=&sid=&sorozatnev=&complexsearch=&evad=&epizod1=&elotag=&minoseg=&rlsr=", 3, 3),
-                    new FeliratokInfoListPagesProcessor(
+                    new FIListPagesProcessor(
                         new PageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
-                        new FeliratokInfoSubtitleDataProcessor(new FileSaver(), new Url2FileNameFormatter())
+                        new FISubtitleDataProcessor(new FileSaver(), new Url2FileNameFormatter())
                     )
                 );
         }
 
-        private static FeliratokInfoRootProcessor InitProcessed()
+        private static FIRootProcessor InitProcessed()
         {
-            return new FeliratokInfoRootProcessor(
+            return new FIRootProcessor(
                 "https://www.feliratok.info/",
-                new FeliratokInfoListPagesProcessor(
+                new FIListPagesProcessor(
                     new PageListItemsSelector("/html/body/div/div/a/@href"),
-                    new FeliratokInfoListPagesProcessor(
+                    new FIListPagesProcessor(
                         new PageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
-                        new FeliratokInfoSubtitleDataProcessor(new FileSaver(), new Url2FileNameFormatter())
+                        new FISubtitleDataProcessor(new FileSaver(), new Url2FileNameFormatter())
                     )
                 ));
         }

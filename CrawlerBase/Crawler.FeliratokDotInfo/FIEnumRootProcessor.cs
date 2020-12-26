@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Crawler.FeliratokDotInfo
 {
-    public class FeliratokInfoEnumRootProcessor : RootProcessor<string>, IRootEnumOperationElement
+    public class FIEnumRootProcessor : RootProcessor<string>, IRootEnumOperationElement
     {
-        public FeliratokInfoEnumRootProcessor(string baseUrl, ISelector<List<string>> selector, IOperationBaseElement opPipe) 
+        public FIEnumRootProcessor(string baseUrl, ISelector<List<string>> selector, IOperationBaseElement opPipe) 
             : base(baseUrl, opPipe)
         {
             this.Selector = selector;

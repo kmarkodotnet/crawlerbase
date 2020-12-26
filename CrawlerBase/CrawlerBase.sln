@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerBase.ConsoleHost", "CrawlerBase.ConsoleHost\CrawlerBase.ConsoleHost.csproj", "{DBCE8D39-B564-4A37-A970-3CD0B9A8969A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrawlerBase.ConsoleHost", "CrawlerBase.ConsoleHost\CrawlerBase.ConsoleHost.csproj", "{DBCE8D39-B564-4A37-A970-3CD0B9A8969A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerBase.Logic", "CrawlerBase.Logic\CrawlerBase.Logic.csproj", "{4754ED20-429B-424F-9D77-5DCD032023CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrawlerBase.Logic", "CrawlerBase.Logic\CrawlerBase.Logic.csproj", "{4754ED20-429B-424F-9D77-5DCD032023CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crawler.FeliratokDotInfo", "Crawler.FeliratokDotInfo\Crawler.FeliratokDotInfo.csproj", "{E9577039-ADBD-4E12-8CEA-EF96D7262923}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crawler.FI", "Crawler.FeliratokDotInfo\Crawler.FI.csproj", "{E9577039-ADBD-4E12-8CEA-EF96D7262923}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

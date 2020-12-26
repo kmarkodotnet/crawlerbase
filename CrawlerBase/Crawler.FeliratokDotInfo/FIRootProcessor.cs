@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Crawler.FeliratokDotInfo
 {
-    public class FeliratokInfoRootProcessor : RootProcessor<string>
+    public class FIRootProcessor : RootProcessor<string>
     {
-        public FeliratokInfoRootProcessor(string baseUrl, IOperationBaseElement opPipe) 
+        public FIRootProcessor(string baseUrl, IOperationBaseElement opPipe) 
             : base(baseUrl, opPipe)
         {
         }

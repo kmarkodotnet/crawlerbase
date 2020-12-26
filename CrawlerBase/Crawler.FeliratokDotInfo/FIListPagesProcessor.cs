@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Crawler.FeliratokDotInfo
 {
-    public class FeliratokInfoListPagesProcessor : PageProcessor<List<string>>
+    public class FIListPagesProcessor : PageProcessor<List<string>>
     {
-        public FeliratokInfoListPagesProcessor(ISelector<List<string>> Selector, IOperationBaseElement OpPipe, bool downloadUtf7 = false)
+        public FIListPagesProcessor(ISelector<List<string>> Selector, IOperationBaseElement OpPipe, bool downloadUtf7 = false)
             :base(Selector, new HtmlParser(),  OpPipe)
         {
             base.DownloadUtf7 = downloadUtf7;

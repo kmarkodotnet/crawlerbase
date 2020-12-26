@@ -6,9 +6,9 @@ using System.Xml.XPath;
 
 namespace Crawler.FeliratokDotInfo
 {
-    public class FeliratokInfoConditionalPageListItemsSelector : PageListItemsSelector
+    public class FIConditionalPageListItemsSelector : PageListItemsSelector
     {
-        public FeliratokInfoConditionalPageListItemsSelector(string xPath) : base(xPath)
+        public FIConditionalPageListItemsSelector(string xPath) : base(xPath)
         {
         }
 
