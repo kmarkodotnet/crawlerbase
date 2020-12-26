@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Crawler.FeliratokDotInfo
+namespace Crawler.FI
 {
     public class FIListPagesProcessor : PageProcessor<List<string>>
     {

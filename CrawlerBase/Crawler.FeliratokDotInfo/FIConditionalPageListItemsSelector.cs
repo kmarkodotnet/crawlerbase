@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.XPath;
 
-namespace Crawler.FeliratokDotInfo
+namespace Crawler.FI
 {
     public class FIConditionalPageListItemsSelector : PageListItemsSelector
     {

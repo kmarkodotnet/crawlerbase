@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Crawler.FeliratokDotInfo
+namespace Crawler.FI
 {
     public class FIRootProcessor : RootProcessor<string>
     {
