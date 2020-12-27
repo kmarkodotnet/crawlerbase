@@ -5,15 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static CrawlerBase.Logic.PageDownloader;
 
 namespace Crawler.HH
 {
     public class HHListPagesProcessor : PageProcessor<List<string>>
     {
-        public HHListPagesProcessor(ISelector<List<string>> Selector, IOperationBaseElement OpPipe, bool downloadUtf7 = false)
+        public HHListPagesProcessor(ISelector<List<string>> Selector, IOperationBaseElement OpPipe, PageDownloaderMode pageDownloaderMode = PageDownloaderMode.String)
             :base(Selector, new HtmlParser(),  OpPipe)
         {
-            base.DownloadUtf7 = downloadUtf7;
+            base.PageDownloaderMode = pageDownloaderMode;
         }
 
         protected override List<string> PostProcessAfterSelected(List<string> selected)

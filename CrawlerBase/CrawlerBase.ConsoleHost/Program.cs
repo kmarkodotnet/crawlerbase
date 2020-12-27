@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using static CrawlerBase.Logic.PageDownloader;
 
 namespace CrawlertBase.ConsoleHost
 {
@@ -47,7 +48,7 @@ namespace CrawlertBase.ConsoleHost
                     new HHListPagesProcessor(
                         new HHPageListItemsSelector("/html/body/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/div/h3/a/@href"),
                         new HHContentProcessor(new FileSaver(), new HHUrl2FileNameFormatter()),
-                        true
+                        PageDownloaderMode.Utf8
                     )
                 );
         }
@@ -60,7 +61,7 @@ namespace CrawlertBase.ConsoleHost
                     new FIListPagesProcessor(
                         new FIConditionalPageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
                         new FISubtitleDataProcessor(new FileSaver(), new FIUrl2FileNameFormatter()),
-                        true
+                        PageDownloaderMode.Utf7
                     )
                 );
         }

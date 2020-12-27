@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static CrawlerBase.Logic.PageDownloader;
 
 namespace CrawlerBase.Logic.OperationPipeline.Interfaces
 {
@@ -17,7 +18,7 @@ namespace CrawlerBase.Logic.OperationPipeline.Interfaces
         /// <returns></returns>
         TSelect Process(string content);
 
-        bool DownloadUtf7 { get; set; }
+        PageDownloaderMode PageDownloaderMode { get; set; }
     }
 }
 

@@ -31,7 +31,7 @@ namespace CrawlerBase.Logic.Dataflow
                     {
                         Url = y,
                         OperationElement = opElement.NextOperation,
-                        DownloadUtf7 = opElement.DownloadUtf7
+                        PageDownloaderMode = opElement.PageDownloaderMode
                     }));
                 }
                 else if (data.OperationElement is IOperationElement<string> opElement1)
@@ -41,7 +41,7 @@ namespace CrawlerBase.Logic.Dataflow
                     {
                         Url = x,
                         OperationElement = opElement1.NextOperation,
-                        DownloadUtf7 = opElement1.DownloadUtf7
+                        PageDownloaderMode = opElement1.PageDownloaderMode
                     });
                 }
                 else if (data.OperationElement is IContentElement<string> ce)

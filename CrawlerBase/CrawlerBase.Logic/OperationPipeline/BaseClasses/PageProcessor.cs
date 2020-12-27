@@ -11,7 +11,7 @@ namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
         public ISelector<TSelect> Selector { get; set; }
         public HtmlParser Parser { get; set; }
         public IOperationBaseElement NextOperation { get; set; }
-        public bool DownloadUtf7 { get; set; }
+        public PageDownloader.PageDownloaderMode PageDownloaderMode { get; set; }
 
         public PageProcessor(ISelector<TSelect> Selector, HtmlParser Parser, IOperationBaseElement OpPipe)
         {

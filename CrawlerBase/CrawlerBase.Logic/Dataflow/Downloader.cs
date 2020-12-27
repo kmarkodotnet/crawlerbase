@@ -27,7 +27,7 @@ namespace CrawlerBase.Logic.Dataflow
 
             try
             {
-                var result = await _pd.Download(data.Url, data.DownloadUtf7);
+                var result = await _pd.Download(data.Url, data.PageDownloaderMode);
                 items.Add(new ProcessableData
                 {
                     Content = result,
