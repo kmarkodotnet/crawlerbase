@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Crawler.FeliratokDotInfo\Crawler.FI.csproj" />
+    <ProjectReference Include="..\Crawler.HH\Crawler.HH.csproj" />
     <ProjectReference Include="..\CrawlerBase.Logic\CrawlerBase.Logic.csproj" />
   </ItemGroup>
 

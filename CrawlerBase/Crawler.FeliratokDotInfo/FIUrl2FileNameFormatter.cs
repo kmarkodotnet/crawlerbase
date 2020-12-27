@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
+namespace Crawler.FI
 {
-    public class Url2FileNameFormatter : IFileNameFormatter
+    public class FIUrl2FileNameFormatter : IFileNameFormatter
     {
         public string GetFileName(string sourceUrl)
         {
