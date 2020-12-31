@@ -23,11 +23,11 @@ namespace CrawlerBase.Logic.Dataflow
             this.pageDataProcessorThreadPool = pageDataProcessorThreadPool;
         }
 
-        protected void InsertQ1(T1 insertData)
+        public void InsertQ1(T1 insertData)
         {
             DownloadUrlQueue.Post<T1>(insertData);
         }
-        protected void InsertQ2(T2 insertData)
+        public void InsertQ2(T2 insertData)
         {
             ProcessDataQueue.Post<T2>(insertData);
         }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
 {
-    public class FileSaver : ISaver
+    public class SimpleFileSaver : ISaver<string>
     {
         public void Save(string name, string content)
         {

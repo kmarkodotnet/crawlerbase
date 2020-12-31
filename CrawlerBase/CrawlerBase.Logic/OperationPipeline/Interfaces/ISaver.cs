@@ -4,8 +4,8 @@ using System.Text;
 
 namespace CrawlerBase.Logic.OperationPipeline.Interfaces
 {
-    public interface ISaver
+    public interface ISaver<T>
     {
-        void Save(string name, string content);
+        void Save(string name, T content);
     }
 }

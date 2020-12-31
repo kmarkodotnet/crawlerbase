@@ -10,13 +10,13 @@ namespace Crawler.FI
 {
     public class HHContentProcessor : ContentProcessor<string>
     {
-        public HHContentProcessor(ISaver saver, IFileNameFormatter fileNameFormatter)
+        public HHContentProcessor(ISaver<string> saver, IFileNameFormatter fileNameFormatter)
         {
             this.saver = saver;
             this.fileNameFormatter = fileNameFormatter;
         }
 
-        private readonly ISaver saver;
+        private readonly ISaver<string> saver;
         private readonly IFileNameFormatter fileNameFormatter;
 
         protected override void ProcessData(string sourceUrl, string data)

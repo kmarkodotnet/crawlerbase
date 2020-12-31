@@ -1,4 +1,5 @@
-﻿using CrawlerBase.Logic.OperationPipeline.Interfaces;
+﻿using CrawlerBase.Logic.OperationPipeline.BaseClasses;
+using CrawlerBase.Logic.OperationPipeline.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,7 +25,11 @@ namespace CrawlerBase.Logic.Dataflow
             var items = new List<DownloadableData>();
             try
             {
-                if (data.OperationElement is IOperationElement<List<string>> opElement)
+                if (data.OperationElement is IOperationElement<ComplexItems> opElement2)
+                {
+                    var x = opElement2.Process(data.Content);
+                }
+                else if (data.OperationElement is IOperationElement<List<string>> opElement)
                 {
                     var x = opElement.Process(data.Content);
                     x.ForEach(y => items.Add(new DownloadableData
