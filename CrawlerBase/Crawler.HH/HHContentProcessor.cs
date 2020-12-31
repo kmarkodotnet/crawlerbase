@@ -1,6 +1,7 @@
 ﻿using CrawlerBase.Logic.OperationPipeline.BaseClasses;
 using CrawlerBase.Logic.OperationPipeline.Interfaces;
 using HtmlAgilityPack;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +11,7 @@ namespace Crawler.FI
 {
     public class HHContentProcessor : ContentProcessor<string>
     {
-        public HHContentProcessor(ISaver<string> saver, IFileNameFormatter fileNameFormatter)
+        public HHContentProcessor(ISaver<string> saver, IFileNameFormatter fileNameFormatter, ILogger logger):base(logger)
         {
             this.saver = saver;
             this.fileNameFormatter = fileNameFormatter;

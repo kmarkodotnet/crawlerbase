@@ -31,7 +31,7 @@ namespace Crawler.FI
                 }
                 return current.Value.ToLower() == "magyar";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
             }

@@ -1,5 +1,6 @@
 ﻿using CrawlerBase.Logic.OperationPipeline.BaseClasses;
 using CrawlerBase.Logic.OperationPipeline.Interfaces;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace Crawler.HH
 {
     public class HHComplexListPagesProcessor : PageProcessor<ComplexItems>
     {
-        public HHComplexListPagesProcessor(ISelector<ComplexItems> Selector, IOperationBaseElement OpPipe, PageDownloaderMode pageDownloaderMode = PageDownloaderMode.String)
-            : base(Selector, new HtmlParser(), OpPipe)
+        public HHComplexListPagesProcessor(ISelector<ComplexItems> Selector, IOperationBaseElement OpPipe, ILogger logger, PageDownloaderMode pageDownloaderMode = PageDownloaderMode.String)
+            : base(Selector, new HtmlParser(logger), OpPipe)
         {
             base.PageDownloaderMode = pageDownloaderMode;
         }

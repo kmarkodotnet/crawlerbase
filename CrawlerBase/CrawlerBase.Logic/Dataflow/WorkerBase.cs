@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -26,6 +27,8 @@ namespace CrawlerBase.Logic.Dataflow
             _thead = new Thread(Processor);
             _thead.Start();
             ThreadId = _thead.ManagedThreadId;
+            var typeName = this.GetType().Name;
+            GetLogger().Debug(string.Format("{0} thread started ({1})", typeName, ThreadId));
         }
 
         public void Stop()
@@ -48,12 +51,13 @@ namespace CrawlerBase.Logic.Dataflow
                 }
             }
         }
-
-        protected abstract Task<List<T2>> ProcessData(T1 data);
-        
         void IWorker<T1, T2>.Work()
         {
             Work();
         }
+
+        protected abstract Task<List<T2>> ProcessData(T1 data);
+        protected abstract ILogger GetLogger();
+
     }
 }

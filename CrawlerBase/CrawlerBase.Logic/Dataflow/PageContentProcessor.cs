@@ -1,5 +1,6 @@
 ﻿using CrawlerBase.Logic.OperationPipeline.BaseClasses;
 using CrawlerBase.Logic.OperationPipeline.Interfaces;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,14 +11,25 @@ namespace CrawlerBase.Logic.Dataflow
 {
     public class PageContentProcessor : WorkerBase<ProcessableData, DownloadableData>
     {
-        public static List<WorkerBase<ProcessableData, DownloadableData>> CreateInstances(int count)
+        private readonly ILogger logger;
+
+        public PageContentProcessor(ILogger logger)
+        {
+            this.logger = logger;
+        }
+        public static List<WorkerBase<ProcessableData, DownloadableData>> CreateInstances(int count, ILogger logger)
         {
             var l = new List<WorkerBase<ProcessableData, DownloadableData>>();
             for (int i = 0; i < count; i++)
             {
-                l.Add(new PageContentProcessor());
+                l.Add(new PageContentProcessor(logger));
             }
             return l;
+        }
+
+        protected override ILogger GetLogger()
+        {
+            return logger;
         }
 
         protected override Task<List<DownloadableData>> ProcessData(ProcessableData data)

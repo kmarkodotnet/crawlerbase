@@ -6,6 +6,7 @@ using System.Text;
 namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
 {
     public abstract class PageProcessor<TSelect> : IOperationElement<TSelect>
+        where TSelect: new()
     {
         public IOperationBaseElement Parent { get; set; }
         public ISelector<TSelect> Selector { get; set; }
@@ -31,9 +32,14 @@ namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
 
         public TSelect Process(string page)
         {
-            var parsedData = Parser.Parse(page);
-            var selecselectedData = Selector.Select(parsedData);
-            selecselectedData = PostProcessAfterSelected(selecselectedData);
+            TSelect selecselectedData = new TSelect();
+            try
+            {
+                var parsedData = Parser.Parse(page);
+                selecselectedData = Selector.Select(parsedData);
+                selecselectedData = PostProcessAfterSelected(selecselectedData);
+            }
+            catch{ }            
             return selecselectedData;
         }
 

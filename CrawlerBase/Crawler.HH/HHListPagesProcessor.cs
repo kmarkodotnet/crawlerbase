@@ -1,6 +1,7 @@
 ﻿using CrawlerBase.Logic.OperationPipeline.BaseClasses;
 using CrawlerBase.Logic.OperationPipeline.Interfaces;
 using HtmlAgilityPack;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace Crawler.HH
 {
     public class HHListPagesProcessor : PageProcessor<List<string>>
     {
-        public HHListPagesProcessor(ISelector<List<string>> Selector, IOperationBaseElement OpPipe, PageDownloaderMode pageDownloaderMode = PageDownloaderMode.String)
-            :base(Selector, new HtmlParser(),  OpPipe)
+        public HHListPagesProcessor(ISelector<List<string>> Selector, IOperationBaseElement OpPipe, ILogger logger, PageDownloaderMode pageDownloaderMode = PageDownloaderMode.String)
+            :base(Selector, new HtmlParser(logger),  OpPipe)
         {
             base.PageDownloaderMode = pageDownloaderMode;
         }

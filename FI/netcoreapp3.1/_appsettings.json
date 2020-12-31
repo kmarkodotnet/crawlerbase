@@ -9,19 +9,5 @@
   ],
   "ConnectionStrings": {
     "ConnectionString": "Server=localhost\\SQLEXPRESS01;Database=Crawler;Trusted_Connection=True;"
-  },
-  "NLog": {
-    "targets": {
-      "console": {
-        "type": "Console"
-      }
-    },
-    "rules": [
-      {
-        "logger": "*",
-        "minLevel": "Info",
-        "writeTo": "console"
-      }
-    ]
   }
 }

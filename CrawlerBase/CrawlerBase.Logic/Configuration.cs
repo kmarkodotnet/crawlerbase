@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using NLog;
+using NLog.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,11 +12,6 @@ namespace CrawlerBase.Logic
     {
         public Configuration()
         {
-            IConfigurationBuilder builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            IConfigurationRoot configuration = builder.Build();
-            DbConnectionString = configuration.GetSection("ConnectionStrings").GetSection("ConnectionString").Value;
         }
 
         public string DbConnectionString { get; set; }
@@ -30,6 +27,17 @@ namespace CrawlerBase.Logic
                 }
                 return instance;
             }
+        }
+
+        public void Init()
+        {
+            IConfigurationBuilder builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            IConfigurationRoot configuration = builder.Build();
+            DbConnectionString = configuration.GetSection("ConnectionStrings").GetSection("ConnectionString").Value;
+
+            LogManager.Configuration = new NLogLoggingConfiguration(configuration.GetSection("NLog"));
         }
     }
 }

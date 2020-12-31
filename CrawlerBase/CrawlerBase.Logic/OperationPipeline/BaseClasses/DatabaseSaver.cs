@@ -1,5 +1,6 @@
 ﻿using CrawlerBase.DataAccess;
 using CrawlerBase.Logic.OperationPipeline.Interfaces;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,19 +26,16 @@ namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
                         SourceUrl = name
                     });
                     db.SaveChanges();
+                    GetLogger().Info("Saved: " + name);
                 }
             }
             catch (Exception ex)
             {
-                var errorObject = new
-                {
-                    name,
-                    ex
-                };
-                throw;
+                GetLogger().Error(ex, name);
             }
         }
 
         protected abstract RawDataTypeEnum GetRawDataType();
+        protected abstract ILogger GetLogger();
     }
 }

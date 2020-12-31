@@ -1,4 +1,5 @@
 ﻿
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,16 +10,26 @@ namespace CrawlerBase.Logic.Dataflow
 {
     public class Downloader : WorkerBase<DownloadableData, ProcessableData>
     {
+        private readonly ILogger logger;
         PageDownloader _pd = new PageDownloader();
+        public Downloader(ILogger logger)
+        {
+            this.logger = logger;
+        }
 
-        public static List<WorkerBase<DownloadableData, ProcessableData>> CreateInstances(int count)
+        public static List<WorkerBase<DownloadableData, ProcessableData>> CreateInstances(int count, ILogger logger)
         {
             var l = new List<WorkerBase<DownloadableData, ProcessableData>>();
             for (int i = 0; i < count; i++)
             {
-                l.Add(new Downloader());
+                l.Add(new Downloader(logger));
             }
             return l;
+        }
+
+        protected override ILogger GetLogger()
+        {
+            return logger;
         }
 
         protected override async Task<List<ProcessableData>> ProcessData(DownloadableData data)
