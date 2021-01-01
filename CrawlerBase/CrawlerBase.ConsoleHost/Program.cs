@@ -11,10 +11,8 @@ using static CrawlerBase.Logic.PageDownloader;
 
 namespace CrawlertBase.ConsoleHost
 {
-    //TODO: ex handling
     //TODO: storing downloaded data url-s
     //TODO: filtering downloadable url-s
-    //TODO: logging
     //TODO: DownloaderOperationEngine.Stop()
     //TODO: 'donothing' queue element type
     //TODO: removing unnessesary code

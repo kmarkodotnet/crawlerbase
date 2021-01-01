@@ -35,7 +35,7 @@ namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
             try
             {
                 ProcessData(sourceUrl, data);
-                logger.Info(string.Format("Content processed: {0}", sourceUrl));
+                logger.Debug(string.Format("Content processed: {0}", sourceUrl));
             }
             catch (Exception ex)
             {
