@@ -25,10 +25,4 @@ namespace CrawlerBase.DataAccess
         public string Data { get; set; }
         public DateTime DateDefined { get; set; }
     }
-
-    public enum RawDataTypeEnum
-    {
-        FI = 0,
-        HH = 1
-    }
 }

@@ -120,7 +120,8 @@ namespace CrawlertBase.ConsoleHost
         {
             return new FIEnumRootProcessor(
                 "https://www.feliratok.info/",
-                new PageEnumeratorSelector("/index.php?page={0}&tab=all&sorrend=&irany=&search=&nyelv=&sid=&sorozatnev=&complexsearch=&evad=&epizod1=&elotag=&minoseg=&rlsr=", 1, 2857),
+                new PageEnumeratorSelector("/index.php?page={0}&tab=all&sorrend=&irany=&search=&nyelv=&sid=&sorozatnev=&complexsearch=&evad=&epizod1=&elotag=&minoseg=&rlsr=", 
+                1, 10),
                     new FIListPagesProcessor(
                         new FIConditionalPageListItemsSelector("/html/body/table/tr/td/table/tr/td/a/@href"),
                         new FISubtitleDataProcessor(new FIDatabaseSaver(log), new IdentityFileNameFormatter(), log),

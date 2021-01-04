@@ -38,5 +38,10 @@ namespace Crawler.FI
 
             return base.FilterNode(current);
         }
+
+        protected override bool FilterValue(string value)
+        {
+            return !value.ToLower().Contains(".zip");
+        }
     }
 }

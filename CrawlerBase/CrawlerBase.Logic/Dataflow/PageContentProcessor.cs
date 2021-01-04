@@ -1,11 +1,10 @@
-﻿using CrawlerBase.Logic.OperationPipeline.BaseClasses;
+﻿using CrawlerBase.DataAccess;
+using CrawlerBase.Logic.OperationPipeline.BaseClasses;
 using CrawlerBase.Logic.OperationPipeline.Interfaces;
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 
 namespace CrawlerBase.Logic.Dataflow
 {
@@ -37,49 +36,61 @@ namespace CrawlerBase.Logic.Dataflow
             var items = new List<DownloadableData>();
             try
             {
-                if (data.OperationElement is IOperationElement<ComplexItems> opElement2)
+                if (data.OperationElement is IOperationElement<ComplexItems> complexOperationElement)
                 {
-                    var x = opElement2.Process(data.Content);
+                    var complexData = complexOperationElement.Process(data.Content);
                 }
-                else if (data.OperationElement is IOperationElement<List<string>> opElement)
+                else if (data.OperationElement is IOperationElement<List<string>> stringListOperationElement)
                 {
-                    var x = opElement.Process(data.Content);
-                    x.ForEach(y => items.Add(new DownloadableData
+                    var processedDataList = stringListOperationElement.Process(data.Content);
+                    processedDataList.ForEach(processedData =>
                     {
-                        Url = y,
-                        OperationElement = opElement.NextOperation,
-                        PageDownloaderMode = opElement.PageDownloaderMode
-                    }));
+                        items.Add(new DownloadableData
+                        {
+                            ParentUrl = data.SourceUrl,
+                            Url = processedData,
+                            OperationElement = stringListOperationElement.NextOperation,
+                            PageDownloaderMode = stringListOperationElement.PageDownloaderMode
+                        });
+                        RegisterDownloadContent(data.SourceUrl, processedData);
+                    }
+                  );
                 }
-                else if (data.OperationElement is IOperationElement<string> opElement1)
+                else if (data.OperationElement is IOperationElement<string> stringOperationElement)
                 {
-                    var x = opElement1.Process(data.Content);
+                    var processedData = stringOperationElement.Process(data.Content);
                     items.Add(new DownloadableData
                     {
-                        Url = x,
-                        OperationElement = opElement1.NextOperation,
-                        PageDownloaderMode = opElement1.PageDownloaderMode
+                        ParentUrl = data.SourceUrl,
+                        Url = processedData,
+                        OperationElement = stringOperationElement.NextOperation,
+                        PageDownloaderMode = stringOperationElement.PageDownloaderMode
                     });
+                    RegisterDownloadContent(data.SourceUrl, processedData);
                 }
-                else if (data.OperationElement is IContentElement<string> ce)
+                else if (data.OperationElement is IContentElement<string> contentElement)
                 {
-                    ce.Process(data.SourceUrl, data.Content);
+                    contentElement.Process(data.SourceUrl, data.Content);
                 }
-                else if (data.OperationElement is IRootEnumOperationElement root1)
-                {
-                    items.Add(new DownloadableData
-                    {
-                        Url = root1.BaseUrl,
-                        OperationElement = root1.NextOperation
-                    });
-                }
-                else if (data.OperationElement is IRootOperationElement root)
+                else if (data.OperationElement is IRootEnumOperationElement rootEnumOperationElement)
                 {
                     items.Add(new DownloadableData
                     {
-                        Url = root.BaseUrl,
-                        OperationElement = root.NextOperation
+                        ParentUrl = data.SourceUrl,
+                        Url = rootEnumOperationElement.BaseUrl,
+                        OperationElement = rootEnumOperationElement.NextOperation
                     });
+                    RegisterDownloadContent(string.Empty, data.SourceUrl);
+                }
+                else if (data.OperationElement is IRootOperationElement rootOperationElement)
+                {
+                    items.Add(new DownloadableData
+                    {
+                        ParentUrl = data.SourceUrl,
+                        Url = rootOperationElement.BaseUrl,
+                        OperationElement = rootOperationElement.NextOperation
+                    });
+                    RegisterDownloadContent(data.SourceUrl, rootOperationElement.BaseUrl);
                 }
             }
             catch (Exception ex)
@@ -92,6 +103,14 @@ namespace CrawlerBase.Logic.Dataflow
                 throw;
             }
             return Task.Run(() => items);
+        }
+
+        private void RegisterDownloadContent(string parentUrl, string url)
+        {
+            using (var context = new CrawlerContext(Configuration.Instance.DbConnectionString))
+            {
+                context.RegisterDownloadContent(parentUrl, url);
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿
+using CrawlerBase.DataAccess;
 using CrawlerBase.Logic.OperationPipeline.Interfaces;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
@@ -35,12 +37,20 @@ namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
             try
             {
                 ProcessData(sourceUrl, data);
+                FinishDownloadedContent(sourceUrl);
                 logger.Debug(string.Format("Content processed: {0}", sourceUrl));
             }
             catch (Exception ex)
             {
                 logger.Error(ex, "ContentProcessor: " + sourceUrl);
-                throw;
+            }
+        }
+
+        private void FinishDownloadedContent(string sourceUrl)
+        {
+            using (var context = new CrawlerContext(Configuration.Instance.DbConnectionString))
+            {
+                context.FinishDownloadedContent(sourceUrl);
             }
         }
 

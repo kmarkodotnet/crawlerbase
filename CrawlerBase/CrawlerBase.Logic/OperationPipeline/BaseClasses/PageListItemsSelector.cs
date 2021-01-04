@@ -39,5 +39,10 @@ namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
         {
             return true;
         }
+
+        protected override bool FilterValue(string value)
+        {
+            return true;
+        }
     }
 }

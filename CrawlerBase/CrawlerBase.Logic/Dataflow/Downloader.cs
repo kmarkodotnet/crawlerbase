@@ -1,7 +1,9 @@
 ﻿
+using CrawlerBase.DataAccess;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
@@ -39,6 +41,7 @@ namespace CrawlerBase.Logic.Dataflow
             try
             {
                 var result = await _pd.Download(data.Url, data.PageDownloaderMode);
+
                 items.Add(new ProcessableData
                 {
                     Content = result,
@@ -46,16 +49,23 @@ namespace CrawlerBase.Logic.Dataflow
                     OperationElement = data.OperationElement
                 });
 
+                SetDownloadedContent(data.Url);
             }
             catch (Exception ex) 
             {
-                var errorObject = new {
-                    data.Url,
-                    ex
-                };
-                throw;
+                logger.Error(ex, data.Url);
             }
             return items;
         }
+
+        private void SetDownloadedContent(string sourceUrl)
+        {
+            using (var context = new CrawlerContext(Configuration.Instance.DbConnectionString))
+            {
+                context.SetDownloadedContent(sourceUrl);
+            }
+        }
+
+        
     }
 }

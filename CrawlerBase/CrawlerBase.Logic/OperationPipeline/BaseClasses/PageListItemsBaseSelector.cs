@@ -27,7 +27,10 @@ namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
             {
                 if (FilterNode(nodes.Current.Clone()))
                 {
-                    selected.Add(nodes.Current.Value);
+                    if (FilterValue(nodes.Current.Value))
+                    {
+                        selected.Add(nodes.Current.Value);
+                    }                    
                 }
                 
                 nodes.MoveNext();
@@ -36,5 +39,6 @@ namespace CrawlerBase.Logic.OperationPipeline.BaseClasses
         }
 
         protected abstract bool FilterNode(XPathNavigator current);
+        protected abstract bool FilterValue(string value);
     }
 }

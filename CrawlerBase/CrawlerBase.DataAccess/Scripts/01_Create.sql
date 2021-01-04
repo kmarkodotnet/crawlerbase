@@ -9,3 +9,25 @@ PRIMARY KEY CLUSTERED
     [Id] ASC  
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]  
 ) ON [PRIMARY]  
+
+GO
+
+CREATE TABLE [dbo].[ContentRegister](  
+    [Id] [int] IDENTITY(1,1) NOT NULL,
+    [ParentUrl] [varchar](1024) not NULL,
+    [Url] [varchar](1024) not NULL,
+    [DateDefined] [datetime] not null,
+    [DateModified] [datetime] not null,
+    [StateId] [int] not null,
+PRIMARY KEY CLUSTERED   
+(  
+    [Id] ASC  
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]  
+) ON [PRIMARY]  
+
+GO
+
+CREATE INDEX [ContentRegister_ParentUrl]
+ON ContentRegister(ParentUrl);
+
+GO
